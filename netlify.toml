@@ -1,5 +1,4 @@
 [build]
-  base = "FriendNDA"
   command = "npm run build"
   publish = ".next"
 
