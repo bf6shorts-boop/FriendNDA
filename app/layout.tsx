@@ -34,6 +34,17 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0EE4P7Y1M"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-D0EE4P7Y1M');
+            `
+          }}
+        />
       </head>
       <body>
         <div className="page-shell">
