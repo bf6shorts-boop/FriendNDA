@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { buildSlug, randomString } from "@/lib/pact-utils";
+import { trackEvent } from "@/lib/analytics";
 import type { FirebaseError } from "firebase/app";
 
 export default function CreateForm() {
@@ -73,6 +74,7 @@ export default function CreateForm() {
         window.sessionStorage.setItem("frienda_owner_key", ownerSecret);
       }
 
+      trackEvent("step_1_create_pact");
       router.push(`/p/${slug}/share`);
     } catch (err) {
       const firebaseError = err as FirebaseError;

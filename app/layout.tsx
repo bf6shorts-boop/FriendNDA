@@ -71,6 +71,20 @@ export default function RootLayout({
           <main className="container-shell py-12">{children}</main>
           <footer className="container-shell pb-12 text-xs text-soft">
             FriendNDA is a trust-based agreement designed for clarity and accountability between people.
+            <div className="mt-3">
+              <a
+                href="https://www.producthunt.com/products/friendnda?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-friendnda"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  alt="FriendNDA - A simple way to ask friends to keep things private | Product Hunt"
+                  width="250"
+                  height="54"
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1074414&theme=light&t=1770389708271"
+                />
+              </a>
+            </div>
           </footer>
         </div>
       </body>

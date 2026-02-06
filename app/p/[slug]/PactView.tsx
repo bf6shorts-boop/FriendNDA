@@ -17,6 +17,7 @@ import {
 import { db } from "@/lib/firebase";
 import { formatDate, normalizeEmail } from "@/lib/pact-utils";
 import ConfettiBurst from "./ConfettiBurst";
+import { trackEvent } from "@/lib/analytics";
 
 interface PactRecord {
   title: string;
@@ -188,6 +189,7 @@ export default function PactView() {
       } catch (eventError) {
         console.error(eventError);
       }
+      trackEvent("step_3_sign_pact");
       setStatus("signed");
       setSentCopy(Boolean(normalizedEmail));
       setSignedLocally(true);

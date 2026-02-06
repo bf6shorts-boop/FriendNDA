@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import {
   addDoc,
@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { normalizeEmail } from "@/lib/pact-utils";
+import { trackEvent } from "@/lib/analytics";
 
 interface PactRecord {
   title: string;
@@ -36,6 +37,7 @@ export default function ShareView() {
   const [inviteError, setInviteError] = useState<string | null>(null);
   const [ownerKey, setOwnerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const hasTrackedView = useRef(false);
 
   useEffect(() => {
     if (!slug) return;
@@ -46,6 +48,10 @@ export default function ShareView() {
       if (storedSlug === slug && storedKey) {
         setOwnerKey(storedKey);
       }
+    }
+    if (!hasTrackedView.current) {
+      trackEvent("step_2_share_view");
+      hasTrackedView.current = true;
     }
   }, [slug]);
 
@@ -96,6 +102,7 @@ export default function ShareView() {
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopyStatus("success");
+      trackEvent("step_2_copy_link");
     } catch (copyError) {
       console.error(copyError);
       setCopyStatus("error");
@@ -163,6 +170,7 @@ export default function ShareView() {
       setPact({ ...pact, invitedEmails: mergedInvites });
       setInviteEmails("");
       setInviteStatus("sent");
+      trackEvent("step_2_send_invites", { count: emails.length });
     } catch (err) {
       console.error(err);
       setInviteError("Unable to send invites right now.");
